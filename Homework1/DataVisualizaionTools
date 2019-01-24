@@ -1,0 +1,10 @@
+1. Tableau.
+	It's one of the Data Visualization tools which also helps in better data analysis. One of the biggest advantages of Tableau is that you don't need to have any programming language experience for creating charts or graphs. That's why it is widely popular and a trending Business Intelligence tool.
+
+    For my project, which is the Omics network, a collection of medical database network which highlights protein-protein interactions. Tableau comes in handy in creating the networks, or sub-graph networks. Helps in visualizing these data and create a pattern or unusual behavior in the data/graph.
+
+
+ 2. D3.
+	Data-Driven Documents, it's a javascript based data visualization tool. It's very robust and dynamic which helps in creating data graphs pretty easily and with less amount of time. As like Tableau, D3 is also web-based and you can create the graphs online and store them. It uses HTML and CSS standards for the creation which makes it even easier to work with.
+
+	For my Project, just like Tableau, D3 also helps me in visualizing medical data in an organized and readable format. D3 would also help in finding the data anomalies, special networks and relations among data which is crucial in finding network links.
