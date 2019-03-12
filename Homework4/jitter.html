@@ -1,0 +1,100 @@
+<html>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script>
+	gradient_p1 = {
+		x: -2,
+		y: -4.4
+	};
+	gradient_p2 = {
+		x: 3.25,
+		y: -2.7
+	};
+	gradient_p3 = {
+		x: -3.3,
+		y: -1.75
+	};
+	var loc = [];
+	var sample = [];
+	var i = 0;
+	window.onload = function (e) {
+		var width = 600,
+		height = 600,
+		margin = 100;
+
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + 2 * margin)
+			.attr("height", height + 2 * margin)
+			.append("g")
+			.attr("translate(" + margin + "," + margin + ")");
+
+		svg = d3.select("svg")
+
+			var yScale = d3.scaleLinear().range([height, 0]).domain([-5, 5]);
+		var xScale = d3.scaleLinear().range([0, width]).domain([-5, 5]);
+
+		svg.append("g")
+		.attr("transform", "translate(0," + height / 2 + ")")
+		.attr("visibility", 'hidden')
+		.call(d3.axisBottom(xScale));
+
+		svg.append("g")
+		.attr("transform", "translate(" + width / 2 + ",0)")
+		.attr("visibility", 'hidden')
+		.call(d3.axisLeft(yScale));
+		function plot_line_poly(p1,p2){
+			svg.append("g")
+			.append("path")
+			.attr("d", "M" + xScale(p1.x) + " " + yScale(p1.y) + " L" + xScale(p2.x) + " " + yScale(p2.y))
+			.attr("stroke", "blue")
+			.attr("stroke-width", 3)
+			.attr("fill", "none");
+		}
+		function plot_dot(p) {
+			svg.append("g")
+			.append("circle")
+			.attr("r", 5)
+			//.attr("stroke", "green")
+			.attr("cx", xScale(p.x))
+			.attr("cy", yScale(p.y));
+		}
+
+		function plot_line(p) {
+			svg.append("g")
+			.append("path")
+			.attr("d", "M" + xScale(p.x) + " " + yScale(p.y) + " L" + xScale(p.px) + " " + yScale(p.py))
+			.attr("stroke", "green")
+			.attr("stroke-width", 1)
+			.attr("fill", "none");
+
+			svg.append("g")
+			.append("circle")
+			.attr("r", 1.2)
+			.attr("cx", xScale(p.px))
+			.attr("cy", yScale(p.py));
+		}
+		d3.csv("data2.csv", function (data) {
+			loc[i] = data
+				loc[i].magnitude = Math.sqrt(Math.pow(parseFloat(loc[i].px), 2) + Math.pow(parseFloat(loc[i].py), 2))
+				if (Math.random()>0.95) {
+					loc[i].x = 5 * loc[i].x
+						loc[i].y = 5 * loc[i].y
+						loc[i].px = loc[i].x + 0.3 * loc[i].px
+						loc[i].py = loc[i].y + 0.3 * loc[i].py
+					plot_line(loc[i])
+				} else if (loc[i].magnitude < 0.0005) {
+					plot_dot(loc[i]);
+				}
+				i = i + 1;
+		})
+
+		plot_dot(gradient_p1)
+
+		plot_dot(gradient_p2)
+		
+		plot_dot(gradient_p3)
+		plot_line_poly(gradient_p1,gradient_p2);
+		plot_line_poly(gradient_p1,gradient_p3);
+		plot_line_poly(gradient_p3,gradient_p2);
+	}
+	</script>
+</html>
