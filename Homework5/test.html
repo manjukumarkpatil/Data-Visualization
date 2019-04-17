@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script>
+	gradient_p1 = {
+		x: -2,
+		y: -4.4
+	};
+	gradient_p2 = {
+		x: 3.25,
+		y: -2.7
+	};
+	gradient_p3 = {
+		x: -3.3,
+		y: -1.75
+	};
+	var loc = [];
+	var sample = [];
+	map=[];
+	userId = []
+	var i = 0,j=0;
+	window.onload = function (e) {
+		var width = 600,
+		height = 600,
+		margin = 100;
+
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + 2 * margin)
+			.attr("height", height + 2 * margin)
+			.append("g")
+			.attr("translate(" + margin + "," + margin + ")");
+
+		svg = d3.select("svg")
+
+			var yScale = d3.scaleLinear().range([height, 0]).domain([0, 25]);
+		var xScale = d3.scaleLinear().range([0, width]).domain([0, 20]);
+		/*
+		svg.append("g")
+		.attr("transform", "translate(0," + height / 2 + ")")
+		.attr("visibility", 'hidden')
+		.call(d3.axisBottom(xScale));
+
+		svg.append("g")
+		.attr("transform", "translate(" + width / 2 + ",0)")
+		.attr("visibility", 'hidden')
+		.call(d3.axisLeft(yScale));*/
+		/*p = {
+		x: 2,
+		y: -1,
+		vx: 1,
+		vy: 2,
+		magnitude: Math.sqrt(2 * 2 + 1 * 1)
+		};*/
+
+		// un-transformed
+		function plot_line_poly(p1,p2){
+			svg.append("g")
+			.append("path")
+			.attr("d", "M" + xScale(p1.x) + " " + yScale(p1.y) + " L" + xScale(p2.x) + " " + yScale(p2.y))
+			.attr("stroke", "blue")
+			.attr("stroke-width", 3)
+			.attr("fill", "none");
+		}
+		function plot_dot(p) {
+			/*var symbol = d3.symbol();
+			svg.append("g")
+			.attr("r", 5)
+			//.attr("stroke", "green")
+			.attr("cx", xScale(p.x))
+			.attr("cy", yScale(p.y))
+			.data(p)
+    		.enter().append("path")
+      		.attr("class", "point")
+			.attr("d", symbol.type(function(p){
+	    if(p.map%7 == 0){ return d3.symbolCross
+	    } else if (p.map%7 == 1){ return d3.symbolDiamond
+	    } else if (p.map%7 == 2){ return d3.symbolSquare
+	    } else if (p.map%7 == 3){ return d3.symbolStar
+	    } else if (p.map%7 == 4){ return d3.symbolTriangle
+	    } else if (p.map%7 == 5){ return d3.symbolCircle
+	    } else if(p.map%7 == 6){return d3.symbolWye}
+		}))*/
+		svg.append("g")
+			.append("circle")
+			.attr("r", 5)
+			//.attr("stroke", "green")
+			.attr("cx", xScale(p.x))
+			.attr("cy", yScale(p.y));
+			
+		}
+
+		function plot_line(p) {
+			/*svg.append("g")
+			.append("path")
+			.attr("d", "M" + xScale(p.x) + " " + yScale(p.y) + " L" + xScale(p.px) + " " + yScale(p.py))
+			.attr("stroke", "green")
+			.attr("stroke-width", 1)
+			.attr("fill", "none");
+
+			svg.append("g")
+			.append("circle")
+			.attr("r", 1.2)
+			.attr("cx", xScale(p.px))
+			.attr("cy", yScale(p.py));*/
+			/*
+			// transformed
+			svg.append("g")
+			.append("path")
+			.attr("d", "M" + xScale(0) + " " + yScale(0) + " L" + xScale(p.px) + " " + yScale(p.py))
+			.attr("stroke", "blue")
+			.attr("stroke-width", 2)
+			.attr("fill", "none")
+			.attr("transform", "translate(" + (xScale(p.x) - xScale(0)) + "," + (yScale(p.x) - yScale(0)) + ")");
+
+			svg.append("g")
+			.append("circle")
+			.attr("r", 3)
+			.attr("cx", xScale(p.px))
+			.attr("cy", yScale(p.py))
+			.attr("transform", "translate(" + (xScale(p.x) - xScale(0)) + "," + (yScale(p.py) - yScale(0)) + ")");
+			 */
+		}
+		var count = 0;
+		d3.csv("new_data.csv", function (data) {
+			loc[i] = data
+				i = i + 1;
+				//console.log(data)
+		})
+
+		d3.csv("specs.csv", function (data) {
+			sample[j]=[];
+			sample[j].i1 = data.i1
+			sample[j].i2 = data.i2
+			
+			for(k =0;k<loc.length;k++){
+				cur_map_no = 0;
+				if(sample[j].i1 == loc[k].i1 && sample[j].i2 == loc[k].i2){
+
+					for(l=0;l<map.length;l++){
+						if(map[l].i1 == sample[j].i1 && map[l].i2 == sample[j].i2){
+							cur_map_no = l;
+							break;
+						}
+					}
+					map[l] = [];
+					map[l].i1 = sample[j].i1;
+					map[l].i2 = sample[j].i2;
+					for(l=0;l<userId.length;l++){
+						if(userId[l] == loc[k].id){
+							//cur_id = userId[l];
+							break;
+						}
+					}
+					userId[l] = loc[k].id
+					cur_id = l
+					cur_date = loc[k].time
+					p1 = {
+						x:Date.parse(cur_date)/100000000000,
+						y:cur_id,
+						map:cur_map_no
+					}
+					plot_dot(p1)
+					console.log(cur_date +" "+ cur_id);
+				}
+			}
+			j=j+1;
+			//console.log(data)
+		})
+
+		//plot_dot(gradient_p1)
+
+		//plot_dot(gradient_p2)
+		
+		//plot_dot(gradient_p3)
+		//plot_line_poly(gradient_p1,gradient_p2);
+		//plot_line_poly(gradient_p1,gradient_p3);
+		//plot_line_poly(gradient_p3,gradient_p2);
+	}
+	</script>
+</html>

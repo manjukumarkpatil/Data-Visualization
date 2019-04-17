@@ -1,0 +1,11 @@
+i1,i2
+Vision,NON_skull_inj
+Vision,NON_skull_inj
+NON_skull_inj,PCS
+PCS,NON_skull_inj
+Neurologic,Vision
+Vision,Headache
+Headache,Vision
+Vision,Neurologic
+Neurologic,Anxiety
+Anxiety,Sleep
